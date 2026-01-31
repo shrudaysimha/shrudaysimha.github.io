@@ -37,7 +37,3 @@ Optimized loading performance
 Contact section with professional links
 
 
-
-JavaScript
-
-(Modify this section if you used React, Next.js, Tailwind, or other frameworks.)
