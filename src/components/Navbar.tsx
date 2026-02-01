@@ -44,8 +44,9 @@ const Navbar: React.FC<NavbarProps> = ({ isHidden, onNavigate }) => {
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'py-4' : 'py-8'}`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        {/* 1. Added hover effect to Logo area */}
         <div 
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer transition-transform duration-300 hover:-translate-y-1"
             onClick={() => onNavigate('home')}
         >
            {/* Logo Placeholder */}
@@ -58,7 +59,8 @@ const Navbar: React.FC<NavbarProps> = ({ isHidden, onNavigate }) => {
             <button 
               key={item.label} 
               onClick={() => onNavigate(item.mode)}
-              className="text-sm font-medium text-gray-600 hover:text-dark-grey transition-colors bg-transparent border-none cursor-pointer"
+              /* 2. Changed transition-colors to transition-all and added hover:-translate-y-1 */
+              className="text-sm font-medium text-gray-600 hover:text-dark-grey transition-all duration-300 hover:-translate-y-1 bg-transparent border-none cursor-pointer"
             >
               {item.label}
             </button>
@@ -66,9 +68,10 @@ const Navbar: React.FC<NavbarProps> = ({ isHidden, onNavigate }) => {
         </div>
 
         <div className="flex items-center gap-4">
+           {/* 3. Added hover effect to Contact Button */}
            <Button 
              variant="secondary"
-             className="!px-5 !py-2 text-sm hidden sm:flex"
+             className="!px-5 !py-2 text-sm hidden sm:flex transition-transform duration-300 hover:-translate-y-1"
              onClick={() => onNavigate('contact')}
            >
              Contact

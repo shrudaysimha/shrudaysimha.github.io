@@ -1,6 +1,6 @@
-import type { SectionType, ViewMode } from './types';
 import React, { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import type { SectionType, ViewMode } from './types';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Hero3D from './components/Hero3D';
@@ -8,7 +8,7 @@ import NoiseBackground from './components/NoiseBackground';
 import Projects from './components/Projects';
 import About from './components/About';
 import Contact from './components/Contact';
-
+import Cursor from './components/cursor';
 
 const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('home');
@@ -20,6 +20,9 @@ const App: React.FC = () => {
     viewMode === 'about' ? 'about' : 
     viewMode === 'contact' ? 'contact' :
     'home';
+
+  // Logic: If we are NOT home, the background is dark
+  const isDarkBackground = viewMode !== 'home';
 
   useEffect(() => {
     if (mainRef.current) {
@@ -46,6 +49,9 @@ const App: React.FC = () => {
       className="relative min-h-screen w-full bg-paper text-dark-grey font-sans selection:bg-blue-200 selection:text-blue-900 overflow-x-hidden transition-colors"
     >
       <NoiseBackground />
+
+      {/* The Custom Cursor with the isDark prop */}
+      <Cursor isDark={isDarkBackground} />
       
       {/* 3D Layer */}
       <Hero3D activeSection={activeSection} />
@@ -60,10 +66,10 @@ const App: React.FC = () => {
         {/* Hero Section */}
         <div className={viewMode !== 'home' ? 'pointer-events-none' : ''}>
           <Hero 
-  isExploring={viewMode !== 'home'} 
-  onExplore={() => setViewMode('projects')} 
-  activeSection={viewMode === 'projects' ? 'work' : viewMode} 
-/>
+            isExploring={viewMode !== 'home'} 
+            onExplore={() => setViewMode('projects')} 
+            activeSection={viewMode === 'projects' ? 'work' : viewMode} 
+          />
         </div>
 
         {/* Projects View */}
