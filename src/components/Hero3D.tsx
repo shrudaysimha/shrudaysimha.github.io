@@ -15,7 +15,6 @@ const Hero3D: React.FC<Hero3DProps> = ({ activeSection }) => {
   const particlesMaterialRef = useRef<THREE.PointsMaterial | null>(null);
 
   useEffect(() => {
-    // CAPTURE REF VALUE for safe cleanup
     const container = mountRef.current;
     if (!container) return;
 
@@ -32,17 +31,15 @@ const Hero3D: React.FC<Hero3DProps> = ({ activeSection }) => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     
-    // Append to container
     container.appendChild(renderer.domElement);
 
-    // --- Custom Sketch Shader ---
+    // --- Custom Sketch Shader (Your Original Masterpiece) ---
     const vertexShader = `
       varying vec3 vBarycentric;
       varying vec3 vPosition;
       varying vec2 vUv;
       uniform float uTime;
 
-      // Simplex 3D Noise 
       vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
       vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
       vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -225,12 +222,10 @@ const Hero3D: React.FC<Hero3DProps> = ({ activeSection }) => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
       
-      // Strict cleanup using the captured container variable
       if (container && renderer.domElement && container.contains(renderer.domElement)) {
           container.removeChild(renderer.domElement);
       }
       
-      // Dispose resources
       geometry.dispose();
       nonIndexedGeometry.dispose();
       material.dispose();
@@ -249,6 +244,7 @@ const Hero3D: React.FC<Hero3DProps> = ({ activeSection }) => {
     switch (activeSection) {
         case 'home':
             timeline.to(cameraRef.current.position, { x: 0, z: 6 });
+            timeline.to(meshRef.current.position, { x: 1.8, y: 0, z: 0 }, 0);
             timeline.to(meshRef.current.material, { opacity: 1 }, 0);
             timeline.to(particlesMaterialRef.current.color, { r: 0.145, g: 0.388, b: 0.921 }, 0);
             timeline.to(particlesRef.current.scale, { x: 1, y: 1, z: 1 }, 0);
@@ -256,14 +252,17 @@ const Hero3D: React.FC<Hero3DProps> = ({ activeSection }) => {
 
         case 'work':
             timeline.to(cameraRef.current.position, { x: 3.5, z: 3.5 });
+            timeline.to(meshRef.current.position, { x: 1.8, y: 0, z: 0 }, 0);
             timeline.to(meshRef.current.material, { opacity: 1 }, 0);
             timeline.to(particlesMaterialRef.current.color, { r: 0.145, g: 0.388, b: 0.921 }, 0);
             timeline.to(particlesRef.current.scale, { x: 1.2, y: 1.2, z: 1.2 }, 0);
             break;
 
         case 'about':
-            timeline.to(cameraRef.current.position, { x: -4, z: 4.5 });
-            timeline.to(meshRef.current.material, { opacity: 0.1 }, 0);
+            // FIX #2: Camera stays centered, sphere moves to the right side (x: 3.5), and opacity stays at 1!
+            timeline.to(cameraRef.current.position, { x: 0, z: 6 });
+            timeline.to(meshRef.current.position, { x: 3.5, y: 0, z: 0 }, 0);
+            timeline.to(meshRef.current.material, { opacity: 1 }, 0); 
             timeline.to(particlesRef.current.scale, { x: 2.5, y: 2.5, z: 2.5, duration: 2.5, ease: "slow(0.7, 0.7, false)" }, 0);
             timeline.to(particlesMaterialRef.current.color, { r: 1.0, g: 0.717, b: 0.0 }, 0);
             break;
@@ -281,8 +280,8 @@ const Hero3D: React.FC<Hero3DProps> = ({ activeSection }) => {
   return (
     <div 
       ref={mountRef} 
-      // Changed z-10 to z-0 to sit behind content
-      className="absolute top-0 left-0 w-full h-full z-0 opacity-100 pointer-events-none"
+      // FIX #1: Changed "absolute" to "fixed" so it stays on screen when you scroll the new layout
+      className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"
     />
   );
 };

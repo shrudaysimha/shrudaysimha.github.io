@@ -58,6 +58,7 @@ const Cursor: React.FC<CursorProps> = ({ isDark }) => {
     <div
       ref={cursorRef}
       className={`
+        hidden md:block 
         fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[9999] 
         transform -translate-x-1/2 -translate-y-1/2
         transition-colors duration-500 ease-in-out

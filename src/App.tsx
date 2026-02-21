@@ -8,7 +8,7 @@ import NoiseBackground from './components/NoiseBackground';
 import Projects from './components/Projects';
 import About from './components/About';
 import Contact from './components/Contact';
-import Cursor from './components/cursor';
+import Cursor from './components/CustomCursor';
 
 const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('home');

@@ -1,106 +1,139 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 interface AboutProps {
-    onBack: () => void;
+  onBack: () => void;
 }
 
 const About: React.FC<AboutProps> = ({ onBack }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const backBtnRef = useRef<HTMLButtonElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        // Animation In
-        if (containerRef.current) {
-             gsap.fromTo(containerRef.current,
-                { opacity: 0, scale: 0.95 },
-                { opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out' }
-             );
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from(".animate-item", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power3.out",
+        delay: 0.1
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <>
+      {/* INJECTED CSS: This permanently hides the ugly Windows scrollbar while keeping the scroll working */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
         }
-
-        if (backBtnRef.current) {
-            gsap.fromTo(backBtnRef.current,
-                { opacity: 0, y: -20 },
-                { opacity: 1, y: 0, duration: 0.6, delay: 0.5, ease: 'power2.out' }
-            );
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
-    }, []);
+      `}</style>
 
-    return (
-        <section className="absolute top-0 right-0 w-full h-screen overflow-hidden z-40 bg-black/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none flex items-center justify-center">
+      <div ref={containerRef} className="fixed inset-0 w-full h-screen flex z-30 pointer-events-none">
+        
+        {/* LEFT PANEL: Seamless Gradient Blend & Hidden Scrollbar */}
+        {/* Changed bg color to a gradient that fades into your 3D canvas beautifully */}
+        <div className="w-full lg:w-[65%] h-full bg-gradient-to-r from-[#0f0f0f] via-[#0f0f0f]/95 to-transparent pointer-events-auto overflow-y-auto hide-scrollbar relative z-10 px-[8vw] py-24 pb-32">
+
+          {/* Back Button */}
+          <button 
+            onClick={onBack}
+            className="fixed top-8 left-[8vw] z-50 text-xs tracking-[0.2em] uppercase hover:text-[#F4A261] transition-colors border border-white/20 bg-[#0f0f0f]/50 backdrop-blur-md px-6 py-2 rounded-full text-white"
+          >
+            &lt; Back
+          </button>
+
+          {/* Content Wrapper */}
+          <div className="max-w-2xl mt-8 pr-8">
             
-            {/* Back Button */}
-            <div className="fixed top-6 right-6 z-50">
-                <button
-                    ref={backBtnRef}
-                    onClick={onBack}
-                    className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 text-sm font-medium uppercase tracking-wide px-4 py-2 rounded-full border border-white/10 bg-black/20 backdrop-blur-md hover:bg-white/10"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-1 transition-transform">
-                        <path d="m15 18-6-6 6-6"/>
-                    </svg>
-                    Back
-                </button>
+            <p className="animate-item text-[#F4A261] mb-4 tracking-[0.2em] uppercase font-bold text-xs">
+              — Introduction
+            </p>
+            <h1 className="animate-item text-5xl md:text-[5rem] font-extrabold leading-[1.05] mb-8 text-white tracking-tight">
+              AI & Data <br />Science.
+            </h1>
+            
+            <p className="animate-item text-lg text-[#9CA3AF] max-w-[90%] leading-relaxed font-light mb-12">
+              I’m a first-year AI & Data Science undergraduate focused on building strong foundations in programming, mathematics, and applied AI. I actively work on machine learning, data science, and early-stage generative AI projects, with an emphasis on understanding concepts deeply and applying them through hands-on implementation.
+            </p>
+
+            {/* Currently Learning - Tech List */}
+            <div className="animate-item mb-14">
+              <h3 className="text-xl font-bold text-white mb-6 tracking-wide">Currently Learning</h3>
+              <ul className="space-y-4 text-[#9CA3AF]">
+                <li className="flex items-start">
+                  <span className="text-[#F4A261] mr-3">▹</span>
+                  <span>Python, C/C++, Data Structures & Algorithms</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#F4A261] mr-3">▹</span>
+                  <span>Statistics, Linear Algebra, Probability</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#F4A261] mr-3">▹</span>
+                  <span>Machine Learning, Deep Learning fundamentals</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-[#F4A261] mr-3">▹</span>
+                  <span>Generative AI, LLMs, and RAG systems</span>
+                </li>
+              </ul>
             </div>
 
-            <div ref={containerRef} className="w-full max-w-5xl p-4 md:p-8">
-                {/* Glassmorphic Card */}
-                <div className="w-full relative bg-white/5 backdrop-blur-xl border-l border-white/20 rounded-xl md:rounded-3xl p-6 md:p-0 overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-black/50">
-                    
-                    {/* Vertical Header */}
-                    <div className="hidden md:flex w-16 bg-black/20 border-r border-white/10 items-center justify-center">
-                        <span className="transform -rotate-90 whitespace-nowrap text-xs font-bold tracking-[0.3em] text-white/40 uppercase">
-                            About The Architect
-                        </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 p-6 md:p-10 flex flex-col justify-center">
-                        
-                        {/* Text */}
-                        <div className="space-y-6">
-                            <h3 className="text-3xl font-bold text-white">
-                                Building the <span className="text-blue-500">Future</span> of Intelligence.
-                            </h3>
-                            
-                            <div className="space-y-4 text-sm md:text-base text-gray-300 font-light">
-                                <div className="grid grid-cols-1 gap-4">
-                                    <div className="bg-white/5 p-4 rounded-lg border border-white/5 hover:border-blue-500/30 transition-colors">
-                                        <span className="block text-xs font-bold text-blue-400 uppercase tracking-wider mb-1">Where I’m working</span>
-                                        <p>Currently a first-year AI & Data Science student at CMRIT building strong foundations in coding, math, and AI projects.</p>
-                                    </div>
-                                    
-                                    <div className="bg-white/5 p-4 rounded-lg border border-white/5 hover:border-purple-500/30 transition-colors">
-                                        <span className="block text-xs font-bold text-purple-400 uppercase tracking-wider mb-1">What I’m currently learning</span>
-                                        <p>C/C++, Python, Data Structures, Machine Learning, and engineering fundamentals.</p>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="bg-white/5 p-4 rounded-lg border border-white/5 hover:border-green-500/30 transition-colors">
-                                            <span className="block text-xs font-bold text-green-400 uppercase tracking-wider mb-1">Collaborate on</span>
-                                            <p>Beginner–intermediate AI, ML, data science, and automation projects.</p>
-                                        </div>
-                                        <div className="bg-white/5 p-4 rounded-lg border border-white/5 hover:border-yellow-500/30 transition-colors">
-                                            <span className="block text-xs font-bold text-yellow-400 uppercase tracking-wider mb-1">Looking for help with</span>
-                                            <p>Improving real-world project structure, best coding practices, and research-oriented workflows.</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="bg-white/5 p-4 rounded-lg border border-white/5 hover:border-pink-500/30 transition-colors">
-                                        <span className="block text-xs font-bold text-pink-400 uppercase tracking-wider mb-1">Ask me about</span>
-                                        <p>AI agents, problem-solving approaches, early-stage research ideas, and academic guidance.</p>
-                                    </div>
-
-                                    <div className="italic text-gray-400 border-l-2 border-white/20 pl-4 py-1">
-                                        <span className="font-semibold text-white">Fun fact:</span> I love turning simple ideas into practical prototypes—even if it means building them from scratch!
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {/* Current Project Highlight */}
+            <div className="animate-item mb-14 border-l-2 border-[#F4A261] pl-6 py-2">
+              <h3 className="text-sm uppercase tracking-widest text-gray-500 font-semibold mb-2">Current Project</h3>
+              <p className="text-xl text-white font-medium">Renewable Energy Powered Vehicle</p>
+              <p className="text-[#9CA3AF] text-sm mt-1">(Solar and Wind integrated)</p>
             </div>
-        </section>
-    );
+
+            {/* The Grid Boxes */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+              
+              <div className="animate-item bg-[#1A1A1A] p-8 text-white border border-white/5 rounded-lg transition-transform hover:-translate-y-1 duration-300 shadow-lg">
+                <svg className="w-8 h-8 mb-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                <h3 className="text-xl font-bold mb-3">Looking to Collaborate</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Intermediate AI / ML / Data Science projects, and research-oriented or problem-driven tech initiatives.
+                </p>
+              </div>
+
+              <div className="animate-item bg-[#F4A261] p-8 text-[#1A1A1A] rounded-lg transition-transform hover:-translate-y-1 duration-300 shadow-lg"> 
+                <svg className="w-8 h-8 mb-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                <h3 className="text-xl font-bold mb-3">Seeking Opportunities</h3>
+                <p className="font-medium opacity-90 text-sm leading-relaxed">
+                  Internships where I can learn, build, and contribute meaningfully to real-world challenges.
+                </p>
+              </div>
+
+            </div>
+
+            {/* Footer Philosophy & Contact */}
+            <div className="animate-item border-t border-white/10 pt-10">
+              <p className="text-xl text-white font-medium italic mb-6">
+                "I enjoy turning simple ideas into practical prototypes and improving my thinking through continuous learning and experimentation."
+              </p>
+              <a 
+                href="mailto:shrudaysimha@gmail.com" 
+                className="inline-flex items-center text-[#F4A261] hover:text-white transition-colors font-bold tracking-wide"
+              >
+                Mail: shrudaysimha@gmail.com 
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </>
+  );
 };
+
 export default About;

@@ -2,18 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide the default cursor globally so only your custom 
-   circle cursor is visible.
-*/
 @layer base {
-  body {
-    cursor: none;
-  }
-
-  /* Force hide the "hand" cursor on links and buttons. 
-     The !important is necessary to override browser defaults.
-  */
-  a, button, input, textarea, select, [role="button"] {
-    cursor: none !important;
+  /* ONLY hide the default cursor on screens larger than 768px */
+  @media (min-width: 768px) {
+    body {
+      cursor: none;
+    }
+    
+    a, button, input, textarea, select, [role="button"] {
+      cursor: none !important;
+    }
   }
 }
