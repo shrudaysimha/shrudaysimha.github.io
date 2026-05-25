@@ -89,8 +89,8 @@ const About: React.FC<AboutProps> = ({ onBack }) => {
             {/* Current Project Highlight */}
             <div className="animate-item mb-14 border-l-2 border-[#F4A261] pl-6 py-2">
               <h3 className="text-sm uppercase tracking-widest text-gray-500 font-semibold mb-2">Current Project</h3>
-              <p className="text-xl text-white font-medium">Renewable Energy Powered Vehicle</p>
-              <p className="text-[#9CA3AF] text-sm mt-1">(Solar and Wind integrated)</p>
+              <p className="text-xl text-white font-medium">Upzeal</p>
+              <p className="text-[#9CA3AF] text-sm mt-1">CTO</p>
             </div>
 
             {/* The Grid Boxes */}

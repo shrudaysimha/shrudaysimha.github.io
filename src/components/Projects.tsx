@@ -79,6 +79,54 @@ const Projects: React.FC<ProjectsProps> = ({ onBack }) => {
                </div>
            </div>
 
+           {/* Project Card: Fin Guard */}
+           <div 
+             onClick={() => window.open('https://github.com/shrudaysimha/fingaurd', '_blank')}
+             className="group relative bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-300 cursor-pointer"
+           >
+               <div className="flex justify-between items-start mb-4">
+                 <div className="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-xs font-mono border border-cyan-500/30">Finance / Security</div>
+                 <div className="flex items-center gap-2">
+                    <span className="text-gray-500 text-xs font-mono">2025</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 group-hover:text-cyan-400 transition-colors"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                 </div>
+               </div>
+               <h3 className="text-2xl text-gray-100 font-semibold mb-2 group-hover:text-cyan-400 transition-colors">Fin Guard</h3>
+               <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                 An innovative financial security platform designed to safeguard transactions and monitor anomalies using advanced algorithms.
+               </p>
+               <div className="flex items-center gap-2 mt-2">
+                   <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden flex-1">
+                        <div className="w-3/4 h-full bg-cyan-500/50"></div>
+                   </div>
+                   <span className="text-[10px] text-cyan-400 font-mono">SECURE</span>
+               </div>
+           </div>
+
+           {/* Project Card: Sonic Grid */}
+           <div 
+             onClick={() => window.open('https://github.com/rounitraj7416/SONIC-GRID', '_blank')}
+             className="group relative bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-300 cursor-pointer"
+           >
+               <div className="flex justify-between items-start mb-4">
+                 <div className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-mono border border-green-500/50">Web / Interactive</div>
+                 <div className="flex items-center gap-2">
+                    <span className="text-gray-500 text-xs font-mono">2025</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500 group-hover:text-green-400 transition-colors"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                 </div>
+               </div>
+               <h3 className="text-2xl text-gray-100 font-semibold mb-2 group-hover:text-green-400 transition-colors">Sonic Grid</h3>
+               <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                 A dynamic, interactive grid system featuring high-performance animations and reactive user interfaces tailored for modern web applications.
+               </p>
+               <div className="flex items-center gap-2 mt-2">
+                   <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden flex-1">
+                        <div className="w-2/3 h-full bg-green-400/50"></div>
+                   </div>
+                   <span className="text-[10px] text-green-400 font-mono">DYNAMIC</span>
+               </div>
+           </div>
+
         </div>
       </div>
     </section>
